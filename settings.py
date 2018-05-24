@@ -1,3 +1,4 @@
+from random import randint
 class Settings():
     """A class to store all settings for Alien Invasion."""
     def __init__(self):
@@ -14,3 +15,10 @@ class Settings():
         self.bullet_height = 15
         self.bullet_color = 60,60,60
         self.bullet_allowed = 4
+
+        #Star Settings
+        self.star_speed_factor = randint(20,30)/10
+        self.star_width = 2
+        self.star_height = 2
+        self.star_color = 255,255,255
+        self.star_allowed = 100
