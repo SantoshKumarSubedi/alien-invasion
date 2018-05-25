@@ -1,6 +1,7 @@
 import sys
 from bullet import Bullet
 from alien import Alien
+from star import Star
 import pygame
 
 def check_keydown_event(event, ai_settings, screen, ship,bullets):
@@ -43,12 +44,24 @@ def update_bullets(bullets):
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
 
+def update_star(stars):
+    stars.update()
+
+    for star in stars.copy():
+        if star.rect.bottom >= 700:
+            stars.remove(star)
+
 def fire_bullet(ai_settings, screen, ship, bullets):
     """fire a bullet if limit not reached yet."""
     #create a new bullet if limit not reached yet.
     if len(bullets) < ai_settings.bullet_allowed:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
+
+def create_star(ai_settings,screen,stars):
+    if len(stars) < ai_settings.star_allowed:
+        new_star = Star(ai_settings,screen)
+        stars.add(new_star)
 
 def get_number_aliens_x(ai_settings,alien_width):
     """determine the number of aliens that fit in a row."""
@@ -85,11 +98,12 @@ def create_fleet(ai_settings,screen,ship,aliens):
             create_alien(ai_settings,screen,aliens,alien_number,row_number)
 
 
-def update_screen(ai_settings,screen, ship,aliens, bullets,star):
+def update_screen(ai_settings,screen, ship,aliens, bullets,stars):
     """Update images on the screen and flip to the new screens."""
     #Redraw the screen during each pass through the loop
     screen.fill(ai_settings.bg_color)
-    star.draw_star()
+    for star in stars.sprites():
+        star.draw_star()
     #Redraw all bullets behind ship and aliens .
     for bullet in bullets.sprites():
         bullet.draw_bullet()
