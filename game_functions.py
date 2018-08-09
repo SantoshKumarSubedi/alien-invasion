@@ -51,6 +51,23 @@ def update_star(stars):
         if star.rect.bottom >= 700:
             stars.remove(star)
 
+def update_alien(ai_settings,aliens):
+    """Update the postions of all aliens in the fleet,"""
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()
+
+def check_fleet_edges(ai_settings, aliens):
+    """Respond appropriately if any aliens have reached an edge"""
+    #for alien in aliens.sprites():
+    #    if alien.check_edges():
+    #        change_fleet_direction(ai_settings, aliens)
+    #        break
+def check_fleet_direction(ai_settings, aliens):
+    """Drop the entire fleet and change the fleet's directions"""
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction*= -1
+
 def fire_bullet(ai_settings, screen, ship, bullets):
     """fire a bullet if limit not reached yet."""
     #create a new bullet if limit not reached yet.
